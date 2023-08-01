@@ -1,0 +1,190 @@
+export qprod!, qtprod!, qprod, qtprod, qmul, qtmul!
+
+function qtprod!(A::AbstractMatrix,x::AbstractVector)
+    """
+    qtprod!(A,x)
+
+    Calculates the product of Qᵀ, the unitary matrix from the QR decomposition of A, by a vector x and stores the result within x by replacing its values by those of Qᵀx
+
+    Comutes : Q*x
+
+    Where :
+        - Q is the unitary matrix from the QR factorization of A
+        - x is a vector
+
+    #### Input arguments
+
+    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `x`: a vector of size m 
+    
+    #### Output arguments
+    
+    * `x`: a vector of size m containing the result of the operation Q*x;
+    """
+    m, n = size(A)
+    j = 1
+    while (j <= n) & (j < m)
+        uj = view(A,j+1:m,j)
+        δj = uj'uj + 1
+        xⱼ = x[j]
+        β = 0
+        for i = 1:m-j
+            β += uj[i]*x[i+j]
+        end
+        x[j] -= 2*(xⱼ + β)/δj
+        for l = j+1:m
+            x[l] -= 2*(xⱼ + β)*A[l,j]/δj
+        end
+        j+=1
+    end
+end
+
+function qprod!(A,x)
+    """
+    qprod!(A,x)
+
+    Calculates the product of Q, the unitary matrix from the QR decomposition of A, by a vector x and stores the result within x by replacing its values by those of Qᵀx
+
+    Comutes : Qx
+
+    Where :
+        - Q is the unitary matrix from the QR factorization of A
+        - x is a vector
+
+    #### Input arguments
+
+    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `x`: a vector of size m 
+    
+    #### Output arguments
+    
+    * `x`: a vector of size m containing the result of the operation Qx;
+    """
+    m, n = size(A)
+    k = 1
+        while (k <= n) & (k <= m)
+            j = n-k+1
+            uj = view(A,j+1:m,j)
+            δj = uj'uj + 1
+            xⱼ = x[j]
+            β = 0
+            for i = 1:m-j
+                β += uj[i]*x[i+j]
+            end
+            x[j] -= 2*(xⱼ + β)/δj
+            for l = j+1:m
+                x[l] -= 2*(xⱼ + β)*A[l,j]/δj
+            end
+            k+=1
+        end
+end
+
+function qprod(A, x)
+    """
+    qprod(A,x)
+
+    Calculates the product of Q, the unitary matrix from the QR decomposition of A, by a vector x and stores the result within y, a new vector with the same size as x
+
+    Comutes : Qx
+
+    Where :
+        - Q is the unitary matrix from the QR factorization of A
+        - x is a vector
+
+    #### Input arguments
+
+    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `x`: a vector of size m 
+    
+    #### Output arguments
+    
+    * `y`: a newly created vector of size m containing the result of the operation Qx;
+    """
+    y = similar(x, size(A, 1))
+    qprod!(A, y)
+    y
+end
+
+function qtprod(A, x)
+    """
+    qtprod(A,x)
+
+    Calculates the product of Qᵀ, the unitary matrix from the QR decomposition of A, by a vector x and stores the result within y, a new vector with the same size as x
+
+    Comutes : Q*x
+
+    Where :
+        - Q is the unitary matrix from the QR factorization of A
+        - x is a vector
+
+    #### Input arguments
+
+    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `x`: a vector of size m 
+    
+    #### Output arguments
+    
+    * `y`: a newly created vector of size m containing the result of the operation Q*x;
+    """
+    y = similar(x, size(A, 1))
+    qtprod!(A, y)
+    y
+end
+
+function qmul!(A, B)
+    """
+    qmul!(A,B)
+
+    Calculates the multiplication of Q, the unitary matrix from the QR decomposition of A, by an other matrix B and stores the result within it by replacing its values by those of QB
+
+    Comutes : QB
+
+    Where :
+        - Q is the unitary matrix from the QR factorization of A
+        - B is a matrix
+
+    #### Input arguments
+
+    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `B`: a matrix of dimensions m × r
+    
+    #### Output arguments
+    
+    * `B`: a matrix of dimensions m × r containing the result of the operation QB;
+    """
+    m, n = size(B)
+    for j = 1:n
+        #on effectue ici à chaque fois le produit compact Q*bⱼ
+        qprod!(A, view(B, 1:m, j)) #produit vecteur colonne par vecteur colonne de B
+    end
+    B
+end
+
+function qtmul!(A, B)
+    """
+    qtmul!(A,B)
+
+    Calculates the multiplication of Qᵀ, the unitary matrix from the QR decomposition of A, by an other matrix B and stores the result within it by replacing its values by those of QᵀB
+
+    Comutes : QᵀB
+
+    Where :
+        - Q is the unitary matrix from the QR factorization of A
+        - B is a matrix
+
+    #### Input arguments
+
+    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `B`: a matrix of dimensions m × r
+    
+    #### Output arguments
+    
+    * `B`: a matrix of dimensions m × r containing the result of the operation QᵀB;
+    """
+    m, n = size(B)
+    for j = 1:n
+        #on effectue ici à chaque fois le produit compact Q*bⱼ
+        qtprod!(A, view(B, 1:m, j)) #produit vecteur colonne par vecteur colonne de B
+    end
+    B
+end
