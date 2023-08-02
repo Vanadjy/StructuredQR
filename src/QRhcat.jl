@@ -1,6 +1,6 @@
 export QRhcat!
 
-function QRhcat!(A1, A2)
+function QRhcat!(A1::AbstractMatrix, A2::AbstractMatrix)
     n1 = size(A1,2) #nombre de colonne du premier bloc
     m2, n2 = size(A2)
 

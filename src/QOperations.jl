@@ -39,7 +39,7 @@ function qtprod!(A::AbstractMatrix,x::AbstractVector)
     end
 end
 
-function qprod!(A,x)
+function qprod!(A::AbstractMatrix,x::AbstractVector)
     """
     qprod!(A,x)
 
@@ -62,24 +62,28 @@ function qprod!(A,x)
     """
     m, n = size(A)
     k = 1
-        while (k <= n) & (k <= m)
-            j = n-k+1
-            uj = view(A,j+1:m,j)
-            δj = uj'uj + 1
-            xⱼ = x[j]
-            β = 0
-            for i = 1:m-j
-                β += uj[i]*x[i+j]
-            end
-            x[j] -= 2*(xⱼ + β)/δj
-            for l = j+1:m
-                x[l] -= 2*(xⱼ + β)*A[l,j]/δj
-            end
-            k+=1
+    if m==n #condition to treat the square case
+        k +=1
+    end
+    while (k <= n) & (k <= m)
+        j = n-k+1
+        uj = view(A,j+1:m,j)
+        δj = uj'uj + 1
+        xⱼ = x[j]
+        β = 0
+        for i = 1:m-j
+            β += uj[i]*x[i+j]
         end
+        x[j] -= 2*(xⱼ + β)/δj
+        for l = j+1:m
+            x[l] -= 2*(xⱼ + β)*A[l,j]/δj
+        end
+        k+=1
+    end
+    x
 end
 
-function qprod(A, x)
+function qprod(A::AbstractMatrix,x::AbstractVector)
     """
     qprod(A,x)
 
@@ -105,7 +109,7 @@ function qprod(A, x)
     y
 end
 
-function qtprod(A, x)
+function qtprod(A::AbstractMatrix,x::AbstractVector)
     """
     qtprod(A,x)
 
@@ -131,7 +135,7 @@ function qtprod(A, x)
     y
 end
 
-function qmul!(A, B)
+function qmul!(A::AbstractMatrix, B::AbstractMatrix)
     """
     qmul!(A,B)
 
@@ -160,7 +164,7 @@ function qmul!(A, B)
     B
 end
 
-function qtmul!(A, B)
+function qtmul!(A::AbstractMatrix, B::AbstractMatrix)
     """
     qtmul!(A,B)
 

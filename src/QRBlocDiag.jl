@@ -1,6 +1,6 @@
 export CreateDiagBlock, QRblocdiag!
 
-function CreateDiagBlock(nb_Matrix, m_max, n_max)
+function CreateDiagBlock(nb_Matrix::Int, m_max::Int, n_max::Int)
     A_vect = []
     m_vect = rand(1:m_max, nb_Matrix)
     n_vect = rand(1:n_max, nb_Matrix)
@@ -15,7 +15,7 @@ function CreateDiagBlock(nb_Matrix, m_max, n_max)
     return A_vect, m , n 
 end
 
-function QRblocdiag!(A_vect)
+function QRblocdiag!(A_vect::AbstractVector)
     for A in A_vect
         qrH!(A)
     end

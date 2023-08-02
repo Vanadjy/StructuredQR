@@ -1,6 +1,6 @@
 export QRebuild!, QRebuildHcat, RRebuildHcat
 
-function QRebuild!(A; Q=I)
+function QRebuild!(A::AbstractMatrix; Q=I)
     """
     Q_reconstruction!(A; Q=I)
 
@@ -42,14 +42,14 @@ function QRebuild!(A; Q=I)
     Q
 end
 
-function QRebuildHcat(A1, A2) #A1 et A2 sont les blocs modifiés dans QR_concat_h_compact!
+function QRebuildHcat(A1::AbstractMatrix, A2::AbstractMatrix) #A1 et A2 sont les blocs modifiés dans QR_concat_h_compact!
     m, n1 = size(A1)
     Q1 = QRebuild!(A1)
     Q_prime = QRebuild!(A2[n1+1:end, 1:end])
     return Q1*[I zeros(n1, m-n1); zeros(m-n1, n1) Q_prime]
 end
 
-function RRebuildHcat(A1, A2)
+function RRebuildHcat(A1::AbstractMatrix, A2::AbstractMatrix)
     n1 = size(A1, 2)
     R1 = triu(A1)
     R_prime = triu(A2[n1+1:end, 1:end])
