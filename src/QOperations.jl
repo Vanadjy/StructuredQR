@@ -1,4 +1,4 @@
-export qprod!, qtprod!, qprod, qtprod, qmul, qtmul!
+export qprod!, qtprod!, qprod, qtprod, qmul!, qtmul!
 
 function qtprod!(A::AbstractMatrix,x::AbstractVector)
     """

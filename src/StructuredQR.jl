@@ -7,5 +7,6 @@ include("QRBlocDiag.jl")
 include("QRDense.jl")
 include("QRutils.jl")
 include("QRhcat.jl")
+include("MatricesRebuild.jl")
 
 end

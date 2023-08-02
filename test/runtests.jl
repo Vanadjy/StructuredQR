@@ -1,6 +1,7 @@
 using StructuredQR
 using Test
 using BenchmarkTools, GenericLinearAlgebra
+using LinearAlgebra
 
 ## Tests if the functions work properly ##
 include("TestDenseQR.jl") #Successful tests
