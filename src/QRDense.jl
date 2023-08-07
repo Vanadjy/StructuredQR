@@ -1,10 +1,31 @@
-export qrH!
+export my_sign, qrH!
+
+function my_sign(x::Number)
+    """
+    my_sign(x::Number)
+
+    The idea of this function is to extend the sign one such that it returns 1 whenever it is evaluated at 0
+
+    #### Input arguments
+
+    * `x` : a number
+
+    #### Output arguments
+
+    * 1 if x==0.0
+    * the sign of x otherwise
+    """
+    if x == 0.0
+        return 1
+    else return sign(x)
+    end
+end
 
 function qrH!(A::AbstractMatrix)
     """
     qrH!(A)
     
-    Computes the Householder QR factorization so that no additional memory space is allocated beyond that already occupied by the full rank input matrix A.
+    Computes the Householder QR factorization so that no additional memory space is allocated beyond that already occupied by the full rank overdetermined input matrix A.
     
     Computes : A = QR
     
@@ -16,11 +37,11 @@ function qrH!(A::AbstractMatrix)
 
     #### Input arguments
 
-    * `A`: a full rank matrix of dimension m × n;
+    * `A`: a full rank matrix of dimension m × n, m ≥ n;
 
     #### Output arguments
 
-    * `A`: a matrix of dimension m × n containing the coefficients of Q and R;
+    * `A`: a matrix of dimension m × n, m ≥ n, containing the coefficients of Q and R;
     """
     m, n = size(A)
     j = 1

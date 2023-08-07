@@ -2,19 +2,19 @@ export qprod!, qtprod!, qprod, qtprod, qmul!, qtmul!
 
 function qtprod!(A::AbstractMatrix,x::AbstractVector)
     """
-    qtprod!(A,x)
+    qtprod!(A::AbstractMatrix,x::AbstractVector)
 
-    Calculates the product of Qᵀ, the unitary matrix from the QR decomposition of A, by a vector x and stores the result within x by replacing its values by those of Qᵀx
+    Calculates the product of Qᵀ, the unitary matrix from the QR decomposition of A (an overdetermined full-rank matrix), by a vector x and stores the result within x by replacing its values by those of Qᵀx
 
     Comutes : Q*x
 
     Where :
-        - Q is the unitary matrix from the QR factorization of A
+        - Q is the unitary matrix from the QR factorization of A (an overdetermined full-rank matrix)
         - x is a vector
 
     #### Input arguments
 
-    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `A`: an overtermined full rank matrix of dimension m × n, m ≥ n, containing the coefficients of Q and R;
     * `x`: a vector of size m 
     
     #### Output arguments
@@ -37,23 +37,24 @@ function qtprod!(A::AbstractMatrix,x::AbstractVector)
         end
         j+=1
     end
+    x
 end
 
 function qprod!(A::AbstractMatrix,x::AbstractVector)
     """
-    qprod!(A,x)
+    qprod!(A::AbstractMatrix,x::AbstractVector)
 
-    Calculates the product of Q, the unitary matrix from the QR decomposition of A, by a vector x and stores the result within x by replacing its values by those of Qᵀx
+    Calculates the product of Q, the unitary matrix from the QR decomposition of A (an overdetermined full-rank matrix), by a vector x and stores the result within x by replacing its values by those of Qᵀx
 
     Comutes : Qx
 
     Where :
-        - Q is the unitary matrix from the QR factorization of A
+        - Q is the unitary matrix from the QR factorization of A (an overdetermined full-rank matrix)
         - x is a vector
 
     #### Input arguments
 
-    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `A`: an overtermined full rank matrix of dimension m × n, m ≥ n, containing the coefficients of Q and R;
     * `x`: a vector of size m 
     
     #### Output arguments
@@ -85,19 +86,19 @@ end
 
 function qprod(A::AbstractMatrix,x::AbstractVector)
     """
-    qprod(A,x)
+    qprod(A::AbstractMatrix,x::AbstractVector)
 
-    Calculates the product of Q, the unitary matrix from the QR decomposition of A, by a vector x and stores the result within y, a new vector with the same size as x
+    Calculates the product of Q, the unitary matrix from the QR decomposition of A (an overdetermined full-rank matrix), by a vector x and stores the result within y, a new vector with the same size as x
 
     Comutes : Qx
 
     Where :
-        - Q is the unitary matrix from the QR factorization of A
+        - Q is the unitary matrix from the QR factorization of A (an overdetermined full-rank matrix)
         - x is a vector
 
     #### Input arguments
 
-    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `A`: an overdetermined full rank matrix of dimension m × n, m ≥ n, containing the coefficients of Q and R;
     * `x`: a vector of size m 
     
     #### Output arguments
@@ -111,19 +112,19 @@ end
 
 function qtprod(A::AbstractMatrix,x::AbstractVector)
     """
-    qtprod(A,x)
+    qtprod(A::AbstractMatrix,x::AbstractVector)
 
-    Calculates the product of Qᵀ, the unitary matrix from the QR decomposition of A, by a vector x and stores the result within y, a new vector with the same size as x
+    Calculates the product of Qᵀ, the unitary matrix from the QR decomposition of A (an overdetermined full-rank matrix), by a vector x and stores the result within y, a new vector with the same size as x
 
     Comutes : Q*x
 
     Where :
-        - Q is the unitary matrix from the QR factorization of A
+        - Q is the unitary matrix from the QR factorization of A (an overdetermined full-rank matrix)
         - x is a vector
 
     #### Input arguments
 
-    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `A`: an overdetermined full rank matrix of dimension m × n, m ≥ n, containing the coefficients of Q and R;
     * `x`: a vector of size m 
     
     #### Output arguments
@@ -137,19 +138,19 @@ end
 
 function qmul!(A::AbstractMatrix, B::AbstractMatrix)
     """
-    qmul!(A,B)
+    qmul!(A::AbstractMatrix, B::AbstractMatrix)
 
-    Calculates the multiplication of Q, the unitary matrix from the QR decomposition of A, by an other matrix B and stores the result within it by replacing its values by those of QB
+    Calculates the multiplication of Q, the unitary matrix from the QR decomposition of A (an overdetermined full-rank matrix), by an other matrix B and stores the result within it by replacing its values by those of QB
 
     Comutes : QB
 
     Where :
-        - Q is the unitary matrix from the QR factorization of A
+        - Q is the unitary matrix from the QR factorization of A (an overdetermined full-rank matrix)
         - B is a matrix
 
     #### Input arguments
 
-    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `A`: an overdetermined full rank matrix of dimension m × n, m ≥ n, containing the coefficients of Q and R;
     * `B`: a matrix of dimensions m × r
     
     #### Output arguments
@@ -166,19 +167,19 @@ end
 
 function qtmul!(A::AbstractMatrix, B::AbstractMatrix)
     """
-    qtmul!(A,B)
+    qtmul!(A::AbstractMatrix, B::AbstractMatrix)
 
-    Calculates the multiplication of Qᵀ, the unitary matrix from the QR decomposition of A, by an other matrix B and stores the result within it by replacing its values by those of QᵀB
+    Calculates the multiplication of Qᵀ, the unitary matrix from the QR decomposition of A (an overdetermined full-rank matrix), by an other matrix B and stores the result within it by replacing its values by those of QᵀB
 
     Comutes : QᵀB
 
     Where :
-        - Q is the unitary matrix from the QR factorization of A
+        - Q is the unitary matrix from the QR factorization of A (an overdetermined full-rank matrix)
         - B is a matrix
 
     #### Input arguments
 
-    * `A`: a full rank matrix of dimension m × n containing the coefficients of Q and R;
+    * `A`: an overdetermined full rank matrix of dimension m × n, m ≥ n, containing the coefficients of Q and R;
     * `B`: a matrix of dimensions m × r
     
     #### Output arguments

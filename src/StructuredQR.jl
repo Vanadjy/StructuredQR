@@ -1,12 +1,12 @@
 module StructuredQR
 
-using LinearAlgebra, Printf, SparseArrays
+using LinearAlgebra, Printf, SparseArrays, BlockDiagonals, JSOTemplate
 
+include("Structures/SpecialStructures.jl")
 include("QOperations.jl")
 include("QRBlocDiag.jl")
 include("QRDense.jl")
-include("QRutils.jl")
 include("QRhcat.jl")
-include("MatricesRebuild.jl")
+include("qrhat.jl")
 
 end

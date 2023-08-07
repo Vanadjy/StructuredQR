@@ -1,21 +1,32 @@
-export CreateDiagBlock, QRblocdiag!
-
-function CreateDiagBlock(nb_Matrix::Int, m_max::Int, n_max::Int)
-    A_vect = []
-    m_vect = rand(1:m_max, nb_Matrix)
-    n_vect = rand(1:n_max, nb_Matrix)
-    for k = 1:nb_Matrix
-        if m_vect[k]<n_vect[k] #ensures to always being in overdetermined cases
-            (m_vect[k],n_vect[k]) = (n_vect[k],m_vect[k])
-        end
-        push!(A_vect, rand(m_vect[k],n_vect[k]))
-    end
-    m = sum(m_vect)
-    n = sum(n_vect)
-    return A_vect, m , n 
-end
+export QRblocdiag!
 
 function QRblocdiag!(A_vect::AbstractVector)
+    """
+    QRblocdiag!(A_vect::AbstractVector)
+
+    Computes the QR factorization of an overdetermined Block-Diagonal matrix A through all of its full-rank overdetermined diagonal blocks A₁, A₂, ... Aᵣ as A = QR where Q = diag(Q₁, Q₂, ..., Qᵣ) and R = diag(R₁, R₂, ..., Rᵣ) such that :
+    
+    A₁ = Q₁R₁
+    A₂ = Q₂R₂
+    ...
+    Aᵣ = QᵣRᵣ
+
+    Each Aᵢ block stores the QR information just like qrH! does : the upper triangular stores the coefficients of Rᵢ and the other coefficients of Aᵢ store the vectors required to rebuild Qᵢ
+
+    Computes : A = QR
+
+    Where : 
+        - Q is an unitary Block-Diagonal matrix
+        - R is an upper triangular Block-Diagonal matrix
+    
+    #### Input arguments
+
+    * `A_vect` : an AbstractVector of size r containing all the blocks of a Block-Diagonal matrix;
+
+    #### Output arguments
+
+    * `A_vect` : the same vector where all the matrices have been QR-factorized;
+    """
     for A in A_vect
         qrH!(A)
     end
